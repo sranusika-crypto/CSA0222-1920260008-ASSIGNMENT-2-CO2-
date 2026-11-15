@@ -1,1 +1,136 @@
 
+#include <stdio.h>
+
+unsigned long checks;
+
+// Normal for loop
+int prime_normal(unsigned long n)
+{
+    checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    for (unsigned long i = 2; i < n; i++)
+    {
+        checks++;
+
+        if (n % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+// Improved for loop
+int prime_for(unsigned long n)
+{
+    checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    for (unsigned long i = 2; i * i <= n; i++)
+    {
+        checks++;
+
+        if (n % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+// Improved while loop
+int prime_while(unsigned long n)
+{
+    checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    unsigned long i = 2;
+
+    while (i * i <= n)
+    {
+        checks++;
+
+        if (n % i == 0)
+            return 0;
+
+        i++;
+    }
+
+    return 1;
+}
+
+// Improved do-while loop
+int prime_do(unsigned long n)
+{
+    checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    unsigned long i = 2;
+
+    do
+    {
+        if (i * i > n)
+            break;
+
+        checks++;
+
+        if (n % i == 0)
+            return 0;
+
+        i++;
+
+    } while (i * i <= n);
+
+    return 1;
+}
+
+int main()
+{
+    unsigned long tickets[] = {97, 100, 7919, 1000003};
+
+    printf("Improved For Loop:\n");
+
+    for (int k = 0; k < 4; k++)
+    {
+        int result = prime_for(tickets[k]);
+
+        printf("%8lu %-9s divisions = %lu\n",
+               tickets[k],
+               result ? "prime" : "not prime",
+               checks);
+    }
+
+    printf("\nImproved While Loop:\n");
+
+    for (int k = 0; k < 4; k++)
+    {
+        int result = prime_while(tickets[k]);
+
+        printf("%8lu %-9s divisions = %lu\n",
+               tickets[k],
+               result ? "prime" : "not prime",
+               checks);
+    }
+
+    printf("\nImproved Do-While Loop:\n");
+
+    for (int k = 0; k < 4; k++)
+    {
+        int result = prime_do(tickets[k]);
+
+        printf("%8lu %-9s divisions = %lu\n",
+               tickets[k],
+               result ? "prime" : "not prime",
+               checks);
+    }
+
+    return 0;
+}
+
