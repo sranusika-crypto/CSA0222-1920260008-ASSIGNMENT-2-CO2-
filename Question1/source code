@@ -1,1 +1,46 @@
 
+#include <stdio.h>
+
+int main()
+{
+    double price, qty, senior;
+    double total, net;
+    double gross, discount, tax, correct_total;
+
+    printf("Enter price: ");
+    scanf("%lf", &price);
+
+    printf("Enter quantity: ");
+    scanf("%lf", &qty);
+
+    printf("Senior citizen? (1=Yes, 0=No): ");
+    scanf("%lf", &senior);
+
+    // Original calculation
+    total = price * qty - price * qty * 15 / 100 * senior
+            + price * qty * 5 / 100;
+
+    net = total > 1000 ? total - 50 : total;
+
+    printf("\nOriginal total = %.2f", total);
+    printf("\nOriginal net = %.2f", net);
+
+    // Corrected calculation
+    gross = price * qty;
+    discount = senior ? gross * 0.15 : 0;
+    tax = (gross - discount) * 0.05;
+
+    correct_total = gross - discount + tax;
+
+    net = correct_total > 1000 ?
+          correct_total - 50 : correct_total;
+
+    printf("\n\nCorrect gross = %.2f", gross);
+    printf("\nDiscount = %.2f", discount);
+    printf("\nGST = %.2f", tax);
+    printf("\nCorrect total = %.2f", correct_total);
+    printf("\nCorrect net = %.2f\n", net);
+
+    return 0;
+}
+
