@@ -1,1 +1,67 @@
 
+#include <stdio.h>
+
+int calls = 0;
+
+int verify_card()
+{
+    calls++;
+    return 0;
+}
+
+int main()
+{
+    int senior, eligible, disability;
+    int i;
+
+    // Original condition
+    calls = 0;
+
+    for (i = 0; i < 1000; i++)
+    {
+        senior = (i % 10 < 3);
+        eligible = ((i / 10) % 5 < 2);
+        
+        if ((senior && eligible) || verify_card())
+        {
+            // Concession granted
+        }
+    }
+
+    printf("Original condition calls = %d\n", calls);
+
+    // Reordered condition
+    calls = 0;
+
+    for (i = 0; i < 1000; i++)
+    {
+        senior = (i % 10 < 3);
+        eligible = ((i / 10) % 5 < 2);
+
+        if (verify_card() || (senior && eligible))
+        {
+            // Concession granted
+        }
+    }
+
+    printf("Reordered condition calls = %d\n", calls);
+
+    // Using bitwise AND
+    calls = 0;
+
+    for (i = 0; i < 1000; i++)
+    {
+        senior = (i % 10 < 3);
+        eligible = ((i / 10) % 5 < 2);
+
+        if ((senior && eligible) & verify_card())
+        {
+            // Concession granted
+        }
+    }
+
+    printf("Bitwise AND calls = %d\n", calls);
+
+    return 0;
+}
+
