@@ -1,1 +1,84 @@
 
+#include <stdio.h>
+
+// Original improved prime checking
+unsigned long original_checks = 0;
+
+int original_prime(unsigned long n)
+{
+    original_checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    for (unsigned long i = 2; i <= n / i; i++)
+    {
+        original_checks++;
+
+        if (n % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+// Redesigned prime checking
+unsigned long redesigned_checks = 0;
+
+int redesigned_prime(unsigned long n)
+{
+    redesigned_checks = 0;
+
+    if (n < 2)
+        return 0;
+
+    if (n == 2)
+        return 1;
+
+    redesigned_checks++;
+
+    if (n % 2 == 0)
+        return 0;
+
+    for (unsigned long i = 3; i <= n / i; i += 2)
+    {
+        redesigned_checks++;
+
+        if (n % i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+int main()
+{
+    unsigned long numbers[] = {97, 100, 7919, 1000003};
+
+    printf("PRIME NUMBER OPTIMIZATION\n\n");
+
+    printf("Number\tOriginal\tRedesigned\n");
+    printf("\tChecks\t\tChecks\n");
+
+    for (int i = 0; i < 4; i++)
+    {
+        unsigned long n = numbers[i];
+
+        int result1 = original_prime(n);
+        int result2 = redesigned_prime(n);
+
+        printf("%lu\t%lu\t\t%lu\n",
+               n, original_checks, redesigned_checks);
+
+        if (result1 != result2)
+        {
+            printf("Error: Results do not match!\n");
+            return 1;
+        }
+    }
+
+    printf("\nBoth methods produced the same results.\n");
+
+    return 0;
+}
+
